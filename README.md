@@ -1,22 +1,22 @@
-# 📈 Stock Price Prediction Web App
+#  Stock Price Prediction Web App
 
 A Machine Learning-based web application that predicts future stock prices using historical data. Built with **Streamlit**, **Scikit-learn**, and **Python**, this project allows users to upload stock datasets and visualize predictions interactively.
 
 ---
 
-## 🚀 Features
+##  Features
 
-* 📂 Upload your own stock CSV dataset
-* 📊 Automatic data preprocessing
-* 🤖 Machine Learning model (Linear Regression)
-* 🔮 Future price prediction (user-defined days)
-* 📈 Dynamic graph visualization
-* 📉 Trend detection (UP/DOWN)
-* 🟢 Buy/Sell recommendation system
+*  Upload your own stock CSV dataset
+*  Automatic data preprocessing
+*  Machine Learning model (Linear Regression)
+*  Future price prediction (user-defined days)
+*  Dynamic graph visualization
+*  Trend detection (UP/DOWN)
+*  Buy/Sell recommendation system
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * Python 3.11
 * Streamlit
@@ -27,7 +27,7 @@ A Machine Learning-based web application that predicts future stock prices using
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 Stock-price-prediction/
@@ -40,9 +40,9 @@ Stock-price-prediction/
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
-### 1️⃣ Clone the repository
+###  Clone the repository
 
 ```bash
 git clone https://github.com/priyalkhandelwal0608/Stock-price-prediction.git
@@ -51,7 +51,7 @@ cd Stock-price-prediction
 
 ---
 
-### 2️⃣ Create virtual environment (recommended)
+###  Create virtual environment (recommended)
 
 ```bash
 python -m venv venv
@@ -60,7 +60,7 @@ venv\Scripts\activate   # Windows
 
 ---
 
-### 3️⃣ Install dependencies
+###  Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -68,7 +68,7 @@ pip install -r requirements.txt
 
 ---
 
-### 4️⃣ Run the application
+###  Run the application
 
 ```bash
 streamlit run app.py
@@ -76,7 +76,7 @@ streamlit run app.py
 
 ---
 
-### 5️⃣ Open in browser
+###  Open in browser
 
 ```
 http://localhost:8501
@@ -84,7 +84,7 @@ http://localhost:8501
 
 ---
 
-## 📊 How It Works
+##  How It Works
 
 1. User uploads a CSV file containing stock prices
 2. The app extracts the **'Close' price**
@@ -95,7 +95,7 @@ http://localhost:8501
 
 ---
 
-## 📌 Input Requirements
+##  Input Requirements
 
 * CSV file must contain:
 
@@ -111,7 +111,7 @@ http://localhost:8501
 
 ---
 
-## 📈 Output
+##  Output
 
 * Predicted future prices
 * Trend (UP 📈 / DOWN 📉)
@@ -120,7 +120,7 @@ http://localhost:8501
 
 ---
 
-## 💼 Use Cases
+##  Use Cases
 
 * Stock market trend analysis
 * Beginner-friendly ML project
@@ -129,14 +129,14 @@ http://localhost:8501
 
 ---
 
-## ⚠️ Disclaimer
+##  Disclaimer
 
 This project is for **educational purposes only**.
 It should not be used for real financial decisions.
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Priyal Khandelwal**
 GitHub: https://github.com/priyalkhandelwal0608
