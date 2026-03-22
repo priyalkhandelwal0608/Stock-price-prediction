@@ -27,18 +27,7 @@ A Machine Learning-based web application that predicts future stock prices using
 
 ---
 
-##  Project Structure
 
-```
-Stock-price-prediction/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
-
----
 
 ##  Installation & Setup
 
