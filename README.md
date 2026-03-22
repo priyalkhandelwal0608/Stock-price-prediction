@@ -118,20 +118,3 @@ http://localhost:8501
 
 ---
 
-##  Disclaimer
-
-This project is for **educational purposes only**.
-It should not be used for real financial decisions.
-
----
-
-##  Author
-
-**Priyal Khandelwal**
-GitHub: https://github.com/priyalkhandelwal0608
-
----
-
-## ⭐ If you like this project
-
-Give it a ⭐ on GitHub!
