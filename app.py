@@ -1,11 +1,12 @@
 # =========================================
-# Stock Prediction Web App (FINAL CLEAN)
+# Stock Prediction Web App (NO UPLOAD)
 # =========================================
 
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import yfinance as yf
 
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import MinMaxScaler
@@ -14,86 +15,77 @@ from sklearn.preprocessing import MinMaxScaler
 # UI
 # =========================================
 st.title("📈 Stock Price Prediction App")
-st.write("Upload stock CSV file (must contain 'Close' column)")
+st.write("Demo: Apple (AAPL) stock data is used automatically")
 
-uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
+# Load demo dataset
+df = yf.download("AAPL", start="2023-01-01", end="2024-01-01")
 
-if uploaded_file is not None:
+data = df[['Close']].values
 
-    df = pd.read_csv(uploaded_file)
+# Preprocessing
+scaler = MinMaxScaler()
+scaled_data = scaler.fit_transform(data)
 
-    if "Close" not in df.columns:
-        st.error("CSV must contain 'Close' column")
-    else:
-        data = df[['Close']].values
+X, y = [], []
+for i in range(60, len(scaled_data)):
+    X.append(scaled_data[i-60:i, 0])
+    y.append(scaled_data[i, 0])
 
-        # Preprocessing
-        scaler = MinMaxScaler()
-        scaled_data = scaler.fit_transform(data)
+X, y = np.array(X), np.array(y)
+X = X.reshape(X.shape[0], -1)
 
-        X, y = [], []
-        for i in range(60, len(scaled_data)):
-            X.append(scaled_data[i-60:i, 0])
-            y.append(scaled_data[i, 0])
+# Train
+model = LinearRegression()
+model.fit(X, y)
 
-        X, y = np.array(X), np.array(y)
-        X = X.reshape(X.shape[0], -1)
+# Predictions
+predictions = model.predict(X)
+predictions = scaler.inverse_transform(predictions.reshape(-1, 1))
+y_actual = scaler.inverse_transform(y.reshape(-1, 1))
 
-        # Train
-        model = LinearRegression()
-        model.fit(X, y)
+# Future input
+future_days = st.slider("Select Future Days", 1, 10, 3)
 
-        # Predictions
-        predictions = model.predict(X)
-        predictions = scaler.inverse_transform(predictions.reshape(-1, 1))
-        y_actual = scaler.inverse_transform(y.reshape(-1, 1))
+last_60 = scaled_data[-60:]
+temp_input = last_60.flatten().tolist()
 
-        # Future input
-        future_days = st.slider("Select Future Days", 1, 10, 3)
+future_preds = []
+for i in range(future_days):
+    x_input = np.array(temp_input[-60:]).reshape(1, -1)
+    pred = model.predict(x_input)[0]
+    temp_input.append(pred)
+    future_preds.append(pred)
 
-        last_60 = scaled_data[-60:]
-        temp_input = last_60.flatten().tolist()
+future_preds = scaler.inverse_transform(np.array(future_preds).reshape(-1, 1))
 
-        future_preds = []
-        for i in range(future_days):
-            x_input = np.array(temp_input[-60:]).reshape(1, -1)
-            pred = model.predict(x_input)[0]
-            temp_input.append(pred)
-            future_preds.append(pred)
+# Trend
+latest_actual = y_actual[-1][0]
+latest_pred = future_preds[0][0]
 
-        future_preds = scaler.inverse_transform(np.array(future_preds).reshape(-1, 1))
+trend = "UP 📈" if latest_pred > latest_actual else "DOWN 📉"
+signal = "BUY 🟢" if latest_pred > latest_actual else "SELL 🔴"
+change = ((latest_pred - latest_actual) / latest_actual) * 100
 
-        # Trend
-        latest_actual = y_actual[-1][0]
-        latest_pred = future_preds[0][0]
+# Display
+st.subheader("📊 Prediction Summary")
+st.write(f"Trend: {trend}")
+st.write(f"Recommendation: {signal}")
+st.write(f"Expected Change: {change:.2f}%")
 
-        trend = "UP 📈" if latest_pred > latest_actual else "DOWN 📉"
-        signal = "BUY 🟢" if latest_pred > latest_actual else "SELL 🔴"
-        change = ((latest_pred - latest_actual) / latest_actual) * 100
+st.subheader("🔮 Future Predictions")
+st.write(future_preds.flatten())
 
-        # Display
-        st.subheader("📊 Prediction Summary")
-        st.write(f"Trend: {trend}")
-        st.write(f"Recommendation: {signal}")
-        st.write(f"Expected Change: {change:.2f}%")
+# Graph
+st.subheader("📈 Stock Price Graph")
 
-        st.subheader("🔮 Future Predictions")
-        st.write(future_preds.flatten())
+plt.figure(figsize=(10, 5))
+plt.plot(range(len(y_actual)), y_actual, label="Actual")
+plt.plot(range(len(predictions)), predictions, label="Predicted")
 
-        # Graph
-        st.subheader("📈 Stock Price Graph")
+future_x = np.arange(len(y_actual), len(y_actual) + future_days)
+plt.plot(future_x, future_preds, linestyle='dashed', marker='o', label="Future")
 
-        plt.figure(figsize=(10, 5))
-        plt.plot(range(len(y_actual)), y_actual, label="Actual")
-        plt.plot(range(len(predictions)), predictions, label="Predicted")
+plt.legend()
+plt.title("Stock Price Prediction")
 
-        future_x = np.arange(len(y_actual), len(y_actual) + future_days)
-        plt.plot(future_x, future_preds, linestyle='dashed', marker='o', label="Future")
-
-        plt.legend()
-        plt.title("Stock Price Prediction")
-
-        st.pyplot(plt)
-
-else:
-    st.info("👆 Upload a CSV file to start")
+st.pyplot(plt)
