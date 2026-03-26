@@ -84,21 +84,7 @@ http://localhost:8501
 
 ---
 
-##  Input Requirements
 
-* CSV file must contain:
-
-  ```
-  Close
-  ```
-* Example:
-
-  ```
-  Date,Open,High,Low,Close,Volume
-  2023-01-01,100,105,98,102,1000000
-  ```
-
----
 
 ##  Output
 
